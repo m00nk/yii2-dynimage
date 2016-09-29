@@ -13,7 +13,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
-        "ext-imagick": "",
+        "ext-imagick": "*",
         "yiisoft/yii2": ">=2.0.4",
         "yiisoft/yii2-imagine": "^2.0@dev"
     },
