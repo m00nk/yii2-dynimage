@@ -1,0 +1,25 @@
+{
+    "name": "m00nk/yii2-dynimage",
+    "description": "Dynamic image for Yii2",
+    "type": "yii2-extension",
+    "license": "MIT",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Dmitrij Sheremetjev",
+            "email": "m00nk1975@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.4.0",
+        "ext-imagick": "",
+        "yiisoft/yii2": ">=2.0.4",
+        "yiisoft/yii2-imagine": "^2.0@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "m00nk\\dynimage\\": ""
+        }
+    }
+}
