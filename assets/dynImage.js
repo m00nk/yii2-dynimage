@@ -26,12 +26,12 @@ var dynImage = {
 			{
 				$.each(dynImage.sizes, function(idx, val)
 				{
+					biggest = val;
 					if(val >= w)
 					{
 						w = val;
 						return false;
 					}
-					biggest = val;
 				})
 			}
 
