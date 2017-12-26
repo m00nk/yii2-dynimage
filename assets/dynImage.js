@@ -5,27 +5,23 @@
 
 var dynImage = {
 	sizes: false,
-
-	init: function(sizes)
-	{
+	
+	init: function(sizes) {
 		dynImage.sizes = sizes;
-		$('img-dyn').each(function(i, o)
-		{
+		$('img-dyn').each(function(i, o) {
 			o = $(o);
 			var container = o.parent();
-
+			
 			var attributes = '';
-			$.each(o[0].attributes, function()
-			{
+			$.each(o[0].attributes, function() {
 				if(this.name.indexOf('data-dyn-') != 0)
 					attributes += this.name + '="' + this.value + '" ';
 			});
-
+			
 			var biggest = 0, w = container.width();
 			if(Array.isArray(dynImage.sizes))
 			{
-				$.each(dynImage.sizes, function(idx, val)
-				{
+				$.each(dynImage.sizes, function(idx, val) {
 					biggest = val;
 					if(val >= w)
 					{
@@ -34,11 +30,13 @@ var dynImage = {
 					}
 				})
 			}
-
+			
 			if(w > biggest) w = biggest;
-
+			
 			var url = o.attr('data-dyn-src') + '=' + w + 'x0x' + o.attr('data-dyn-quality') + '.' + o.attr('data-dyn-ext');
-			var img = $('<img src="' + url + '" ' + attributes + ' />').css('opacity', 0).load(function(e){ $(e.target).animate({opacity: 1}, 400)});
+			var img = $('<img src="' + url + '" ' + attributes + ' />')
+				.css('opacity', 0)
+				.on('load', function(e) { $(e.target).animate({opacity: 1}, 400);});
 			o.after(img);
 			o.remove();
 		});
