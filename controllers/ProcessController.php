@@ -12,6 +12,7 @@ use Imagine\Imagick\Imagine;
 use Yii;
 use yii\web\Controller;
 use yii\web\HttpException;
+use yii\web\Response;
 
 class ProcessController extends Controller
 {
@@ -27,6 +28,7 @@ class ProcessController extends Controller
 		Yii::$app->dynimage->createFolderForFile($dstFilePath);
 
 		list($params, $ext) = explode('.', substr($filepath, $_idx + 1));
+		$ext = strtolower($ext);
 		list($width, $height, $quality) = explode('x', $params);
 
 		// масштабируем
@@ -68,7 +70,9 @@ class ProcessController extends Controller
 			throw new RuntimeException(sprintf('Unsupported format given. Only %s are supported, %s given', implode(", ", array_keys($mimeTypes)), $ext));
 		}
 
-		header('Content-type: '.$mimeTypes[$ext]);
+//		header('Content-type: '.$mimeTypes[$ext]);
+		Yii::$app->response->format = Response::FORMAT_RAW;
+		Yii::$app->response->headers->add('Content-type', $mimeTypes[$ext]);
 
 		return $img->get($ext, []);
 	}
