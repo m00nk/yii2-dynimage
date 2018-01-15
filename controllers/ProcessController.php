@@ -6,6 +6,7 @@
 
 namespace m00nk\dynimage\controllers;
 
+use Imagine\Exception\RuntimeException;
 use Imagine\Image\ImageInterface;
 use Imagine\Imagick\Imagine;
 use Yii;
@@ -20,7 +21,7 @@ class ProcessController extends Controller
 		if($_idx === false) throw new HttpException(404);
 
 		$srcFilePath = Yii::getAlias('@webroot/').substr($filepath, 0, $_idx);
-		if(!file_exists($srcFilePath)) throw new HttpException(404);
+		if(!file_exists($srcFilePath)) throw new HttpException(404, 'Wrong path: '.$filepath.' == '.$srcFilePath);
 
 		$dstFilePath = Yii::getAlias('@webroot').Yii::$app->dynimage->cachePath.'/'.$filepath;
 		Yii::$app->dynimage->createFolderForFile($dstFilePath);
@@ -51,6 +52,24 @@ class ProcessController extends Controller
 
 		chmod($dstFilePath, 0666);
 
-		$img->show($ext);
+//		$img->show($ext); // работает криво - получаем ошибки, что данные пошли раньше заголовоков. Поэтому просто дублируем здесь функционал.
+
+		static $mimeTypes = [
+			'jpeg' => 'image/jpeg',
+			'jpg' => 'image/jpeg',
+			'gif' => 'image/gif',
+			'png' => 'image/png',
+			'wbmp' => 'image/vnd.wap.wbmp',
+			'xbm' => 'image/xbm',
+		];
+
+		if(!isset($mimeTypes[$ext]))
+		{
+			throw new RuntimeException(sprintf('Unsupported format given. Only %s are supported, %s given', implode(", ", array_keys($mimeTypes)), $ext));
+		}
+
+		header('Content-type: '.$mimeTypes[$ext]);
+
+		return $img->get($ext, []);
 	}
 }

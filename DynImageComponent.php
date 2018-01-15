@@ -79,7 +79,6 @@ class DynImageComponent extends Component
 		return ($absolute ? Url::to('/', true) : '').$this->cachePath.$path.'='.implode('x', $params).'.'.$ext;
 	}
 
-
 	/**
 	 * Возвращает HTML-код для вставки динамического изображения
 	 *
