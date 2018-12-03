@@ -43,8 +43,8 @@ class DynImageComponent extends Component
 			$folderPath = substr($filePath, 0, strrpos($filePath, '/'));
 			if(!file_exists($folderPath))
 			{
-				mkdir($folderPath, 0777, true);
-				chmod($folderPath, 0777);
+				@mkdir($folderPath, 0777, true);
+				@chmod($folderPath, 0777);
 			}
 		}
 	}
