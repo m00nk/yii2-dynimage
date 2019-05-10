@@ -76,7 +76,7 @@ class DynImageComponent extends Component
 
 		$index = strrpos($path, '.');
 		$ext = empty($ext) ? strtolower(substr($path, $index + 1)) : strtolower($ext);
-		return ($absolute ? Url::to('/', true) : '').$this->cachePath.$path.'='.implode('x', $params).'.'.$ext;
+		return ($absolute ? Url::base(true) : '').$this->cachePath.$path.'='.implode('x', $params).'.'.$ext;
 	}
 
 	/**
