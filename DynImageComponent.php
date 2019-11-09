@@ -18,6 +18,15 @@ use yii\helpers\Url;
  */
 class DynImageComponent extends Component
 {
+	/**
+	 * @var string класс графического движка, который будет использован для обработки
+	 * значения (обратный слеш в начале обязателен):
+	 *  - \Imagine\Imagick\Imagine::class
+	 *  - \Imagine\Gmagick\Imagine::class
+	 *  - \Imagine\Gd\Imagine::class
+	 */
+	public $engineClass = \Imagine\Imagick\Imagine::class;
+
 	/** @var int уровень качества JPEG */
 	public $jpegQuality = 70;
 

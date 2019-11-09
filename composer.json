@@ -3,7 +3,7 @@
     "description": "Dynamic image for Yii2",
     "type": "yii2-extension",
     "license": "MIT",
-    "version": "1.1.4",
+    "version": "1.2.0",
     "authors": [
         {
             "name": "Dmitrij Sheremetjev",
@@ -13,7 +13,6 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
-        "ext-imagick": "*",
         "yiisoft/yii2": ">=2.0.4",
         "yiisoft/yii2-imagine": "^2.0@dev"
     },

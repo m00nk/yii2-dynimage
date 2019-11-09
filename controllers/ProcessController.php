@@ -8,7 +8,6 @@ namespace m00nk\dynimage\controllers;
 
 use Imagine\Exception\RuntimeException;
 use Imagine\Image\ImageInterface;
-use Imagine\Imagick\Imagine;
 use Yii;
 use yii\web\Controller;
 use yii\web\HttpException;
@@ -31,8 +30,10 @@ class ProcessController extends Controller
 		$ext = strtolower($ext);
 		list($width, $height, $quality) = explode('x', $params);
 
+		$engineClass = Yii::$app->dynimage->engineClass;
+
 		// масштабируем
-		$imagine = new Imagine();
+		$imagine = new $engineClass();
 		$img = $imagine->open($srcFilePath);
 		$_size = $img->getSize();
 		$_dx = $_size->getWidth();
@@ -63,6 +64,8 @@ class ProcessController extends Controller
 			'png' => 'image/png',
 			'wbmp' => 'image/vnd.wap.wbmp',
 			'xbm' => 'image/xbm',
+			'webp' => 'image/webp',
+			'bmp' => 'image/bmp',
 		];
 
 		if(!isset($mimeTypes[$ext]))
@@ -70,10 +73,10 @@ class ProcessController extends Controller
 			throw new RuntimeException(sprintf('Unsupported format given. Only %s are supported, %s given', implode(", ", array_keys($mimeTypes)), $ext));
 		}
 
-//		header('Content-type: '.$mimeTypes[$ext]);
 		Yii::$app->response->format = Response::FORMAT_RAW;
 		Yii::$app->response->headers->add('Content-type', $mimeTypes[$ext]);
 
-		return $img->get($ext, []);
+		// return $img->get($ext, []); не срабатывает для webp (хез почему), поэтому просто стримим созданный файл
+		return file_get_contents($dstFilePath);
 	}
 }

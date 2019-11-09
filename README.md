@@ -53,7 +53,8 @@ composer require m00nk/dynimage
 		'class' => 'm00nk\dynimage\DynImageComponent',
 		'jpegQuality' => 60,
 		'sizes' => [50, 200, 800, 1400],
-		'cachePath' => '/uploads/images/cache'
+		'cachePath' => '/uploads/images/cache',
+		'engineClass' => \Imagine\Gmagick\Imagine::class, // меняем графический движок
 	],
 	...
 	'urlManager' => [
@@ -150,7 +151,7 @@ echo Yii::$app->dynimage->img(
 #### Особенности nginx
 Вэб-сервер nginx работает немного отлично от Apache, в частности при использовании настроек кэширования вида
 ```
-location ~* \.(?:jpe?g|png|gif)$ {
+location ~* \.(?:jpe?g|png|gif|webp|wbmp|xbm)$ {
     expires 7d;
     add_header Pragma public;
     add_header Cache-Control "public";
