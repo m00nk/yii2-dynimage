@@ -35,6 +35,8 @@ class ProcessController extends Controller
 		// масштабируем
 		$imagine = new $engineClass();
 		$img = $imagine->open($srcFilePath);
+		$img->strip(); // херим мета-данные (EXIF и прочее говно)
+
 		$_size = $img->getSize();
 		$_dx = $_size->getWidth();
 		$_dy = $_size->getHeight();
